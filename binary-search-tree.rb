@@ -12,18 +12,14 @@ class BinaryTree
       is_spot_found = false
       until is_spot_found
         if element < current_node.value && !current_node.left_child.nil?
-          puts "#{element} is less than #{current_node.value} and not empty!"
           current_node = current_node.left_child
         elsif element < current_node.value && current_node.left_child.nil?
-          puts "#{element} is less than #{current_node.value} and empty!"
           current_node.left_child = Node.new(element)
           is_spot_found = true
         elsif element >= current_node.value && !current_node.right_child.nil?
-          puts "#{element} is greater than #{current_node.value} and not empty!"
           current_node = current_node.right_child
         else
           current_node.right_child = Node.new(element)
-          puts "#{element} is greater than #{current_node.value} and empty!"
           is_spot_found = true
         end
       end
@@ -43,7 +39,6 @@ class BinaryTree
     node_queue = [@root]
     until node_queue.empty?
       current_node = node_queue.shift
-      puts "current_node: #{current_node.value}"
       if current_node.value == target
         return current_node
       else
@@ -53,6 +48,35 @@ class BinaryTree
     end
 
     nil
+  end
+
+  def depth_first_search(target)
+    node_stack = [@root]
+    until node_stack.empty?
+      current_node = node_stack.pop
+      if current_node.value == target
+        return current_node
+      else
+        node_stack << current_node.left_child unless current_node.left_child.nil?
+        node_stack << current_node.right_child unless current_node.right_child.nil?
+      end
+    end
+
+    nil
+  end
+
+  def dfs_rec(target, current_node=@root)
+    if current_node.nil?
+      puts "node found nil!"
+      return
+    elsif current_node.value == target
+      puts "found target node!"
+      return current_node
+    else
+      puts "recursive call!!"
+      dfs_rec(target, current_node.left_child)
+      dfs_rec(target, current_node.right_child)
+    end
   end
 end
 
@@ -72,3 +96,11 @@ end
 tree = BinaryTree.new
 tree.build_tree([4,1,2,0,5,8,6])
 puts tree.breadth_first_search(6)
+puts tree.depth_first_search(6)
+puts tree.breadth_first_search(1)
+puts tree.dfs_rec(1)
+
+
+
+
+
