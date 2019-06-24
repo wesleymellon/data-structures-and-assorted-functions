@@ -26,15 +26,6 @@ class BinaryTree
     end
   end
 
-  # def display_tree
-  #   node_queue = [@root]
-  #   current_node = @root
-  #   while node_queue.length < 8
-  #     node_queue << current_node.left_child
-  #     node_queue << current_node.right_child
-  #     current_node = 
-  # end
-
   def breadth_first_search(target)
     node_queue = [@root]
     until node_queue.empty?
@@ -67,14 +58,12 @@ class BinaryTree
 
   def dfs_rec(target, current_node=@root)
     if current_node.nil?
-      puts "node found nil!"
       return
     elsif current_node.value == target
-      puts "found target node!"
       return current_node
-    else
-      puts "recursive call!!"
+    elsif target < current_node.value
       dfs_rec(target, current_node.left_child)
+    else
       dfs_rec(target, current_node.right_child)
     end
   end
@@ -93,12 +82,6 @@ class Node
 
 end
 
-tree = BinaryTree.new
-tree.build_tree([4,1,2,0,5,8,6])
-puts tree.breadth_first_search(6)
-puts tree.depth_first_search(6)
-puts tree.breadth_first_search(1)
-puts tree.dfs_rec(1)
 
 
 
