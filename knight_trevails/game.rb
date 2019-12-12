@@ -28,12 +28,16 @@ class KnightAlpha
     @end_point = Location.new(end_point, nil)
   end
 
+  def validLocation(location)
+    return location.value[0] >= 0 && location.value[0] < 8 && location.value[1] >= 0 && location.value[1] < 8
+  end
+
   def foo
-    puts "in foo"
     location_queue = [@start_point]
 
     until location_queue.empty?
       current_location = location_queue.shift
+      next unless validLocation(current_location)
       if current_location.value == @end_point.value
         node_counter = 0
         knight_path = []
@@ -66,7 +70,7 @@ class KnightAlpha
   end
 end
 
-knight1 = KnightAlpha.new([1,1], [1, 1])
+knight1 = KnightAlpha.new([1,1], [3, 3])
 
 knight1.foo
 
